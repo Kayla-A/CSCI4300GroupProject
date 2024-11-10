@@ -2,8 +2,8 @@
 import {AuthContext} from "../context/user";
 import Link from "next/link";
 import {useContext, useEffect, useState} from "react"
-import Nav from  "../components/navBar"
 import NavBar from "../components/navBar";
+import { useRouter } from 'next/navigation';
 
 
 const CreateCd = () => {
@@ -15,6 +15,8 @@ const CreateCd = () => {
     }
 
     const { isLoggedIn} = context;
+
+    const router = useRouter();
 
     const [name,setName] = useState('');
     const [artist, setArtist] = useState('');
@@ -55,12 +57,14 @@ const CreateCd = () => {
         };
 
         console.log("Submitted CD:", cdData);
-
+    //clear form
         setName('');
         setArtist('');
         setDate('');
         setImageUrl('');
         setTracklist([]);
+
+        router.push('/'); //return home
     };
 
     return (
@@ -92,7 +96,7 @@ const CreateCd = () => {
                                 />
                             </div>
                             <div>
-                                <label className="text-lg text-black font-medium mb-1">Date</label>
+                                <label className="text-lg text-black font-medium mb-1">Date Added</label>
                                 <input
                                     type="text"
                                     value={date}
