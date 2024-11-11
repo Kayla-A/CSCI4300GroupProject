@@ -56,7 +56,7 @@ const containerStyle = {
 const shelfContainerStyle = {
   position: 'relative',
   width: '800px',
-  height: '750px',
+  height: '800px',
 };
 
 const shelfImageStyle = {
@@ -70,16 +70,16 @@ const shelfImageStyle = {
 
 const itemsContainerStyle = {
     position: 'absolute',
-    top: '25px', // Adjusted to move items slightly lower
+    top: '5px',
     left: '0',
     width: '100%',
     height: '100%',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
     gridTemplateRows: 'repeat(5, 1fr)',
-    gap: '10px', // Increased gap for more vertical spacing
-    padding: '80px', // Adjusted padding to center items in each row
-    zIndex: 2, // Ensure items are on top of the shelf background
+    gap: '1px', 
+    padding: '105px', 
+    zIndex: 2, 
   };
   
   const itemStyle = {
@@ -92,8 +92,8 @@ const itemsContainerStyle = {
   };
   
   const cdImageStyle = {
-    width: '50px', // Keep the size the same, adjust if needed
-    height: '50px',
+    width: '55px', 
+    height: '55px',
     borderRadius: '50%',
   };
   
