@@ -14,7 +14,7 @@ interface CDData {
 
 const CDDetails = () => {
     const router = useRouter();
-    const { id } = router.query;
+    const { id } = router.query || {id: "default-id"};
 
     // Dummy data for now !!!!!!!!!!!!!!!!!!!!!!
     const [cdData, setCdData] = useState<CDData> ({
