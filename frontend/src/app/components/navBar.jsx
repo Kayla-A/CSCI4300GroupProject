@@ -40,10 +40,17 @@ export default function NavBar() {
                     </Link>)
                 }
                 {isLoggedIn && (
-                    <button onClick={handleLogout} className="px-4 py-3 hover:bg-white-900">
-                        Logout
-                    </button>)
-                }
+                    <>
+                        <Link href="../create-cd">
+                            <button className="px-4 py-3 hover:bg-white-900">
+                                Add CD
+                            </button>
+                        </Link>
+                        <button onClick={handleLogout} className="px-4 py-3 hover:bg-white-900">
+                            Logout
+                        </button>
+                    </>
+                )}
             </div>
         </nav>
     ); //return
