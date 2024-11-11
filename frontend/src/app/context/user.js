@@ -20,11 +20,15 @@ const AuthProvider = ({ children }) => {
     const login = async (username,password) => {
         try{
             //post login request
+            const response = { data: { id: "12345" } }; // Mock response
+            setCheckID(response.data.id);
+            localStorage.setItem("userID", response.data.id);
             setIsLoggedIn(true);
             /*
             setCheckID(response.data.id);
             localStorage.setItem("userID", response.data.id);
             */
+            console.log(isLoggedIn);
             router.push("/")
         } catch (error){
             console.log("login unsucessful");
@@ -39,7 +43,7 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout}}>
+        <AuthContext.Provider value={{ isLoggedIn,checkID, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

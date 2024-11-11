@@ -1,14 +1,14 @@
 "use client";
-import strict from "assert/strict";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import NavBar from "@/app/components/navBar";
 
 // The CD's data to display
 interface CDData {
     name: string;
     artist: string;
     date: string;
-    imageURL: String;
+    imageUrl: string;
     tracklist: string[];
 } // CDData
 
@@ -39,7 +39,7 @@ const CDDetails = () => {
             <div className = "cdInfoLeftSide">
                 <h1> {cdData.name} </h1>
                 <p><strong> Artist: </strong> {cdData.artist} </p>
-                <p><strong> Release Data: </strong> {cdData.data} </p>
+                <p><strong> Release Date: </strong> {cdData.date} </p>
                 {cdData.imageUrl && (
                     <img src={cdData.imageUrl} alt={'${cdData.name} cover'} />
                 )}
@@ -56,5 +56,5 @@ const CDDetails = () => {
     );
 }; //CDDetails
 
-export default CDDetails
+export default CDDetails;
 

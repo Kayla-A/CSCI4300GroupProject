@@ -41,7 +41,7 @@ export default function NavBar() {
                 }
                 {isLoggedIn && (
                     <button onClick={handleLogout} className="px-4 py-3 hover:bg-white-900">
-                        Login
+                        Logout
                     </button>)
                 }
             </div>
