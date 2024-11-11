@@ -24,7 +24,7 @@ export default function NavBar() {
                             <Image src="/cd.png" alt="cd" width={50} height={50}/>
                         </Link>
                     </div>
-                    <div className="text-white text-2xl">Shelf Space</div>
+                    <div className="text-black text-2xl">Shelf Space</div>
                 </div>
                 <div className="flex-grow mx-4">
                     <input
@@ -35,7 +35,7 @@ export default function NavBar() {
                 </div>
                 {!isLoggedIn &&(
                     <Link href="../login">
-                    <button className="px-4 py-3 hover:bg-white-900">
+                    <button className="bg-pink-500 text-white px-4 py-3 hover:bg-white hover:text-black">
                     Login
                     </button>
                     </Link>)
@@ -47,7 +47,7 @@ export default function NavBar() {
                                 Add CD
                             </button>
                         </Link>
-                        <button onClick={handleLogout} className="px-4 py-3 hover:bg-white-900">
+                        <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-3 hover:bg-white hover:text-black">
                             Logout
                         </button>
                     </>

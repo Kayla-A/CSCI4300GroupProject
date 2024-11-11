@@ -4,6 +4,8 @@ import {useContext, useEffect, useState,} from "react";
 import NavBar from "@/app/components/navBar";
 import {AuthContext} from "@/app/context/user";
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 // The CD's data to display
 type CDData = {
@@ -134,8 +136,15 @@ const CDDetails = ({params}) => {
         const cd = dummyCds.find(cd => cd.id === urlId);
         setCd(cd);
     }, [id]);
+
+    const handleDelete =(e) => {
+        e.preventDefault();
+        alert("this will delete a cd one day");
+        //delete api call
+    };
+
     return (
-        <div className = "cdInfoContainer">
+        <div >
              <NavBar></NavBar>
             {/*{!isLoggedIn && (
                 <p>NOT LOGGED IN</p>
@@ -144,22 +153,36 @@ const CDDetails = ({params}) => {
                 <p>Cd not found</p>
             )}
             {cd != undefined && (
-                <div>
-                    <div className="cdInfoLeftSide">
-                        <h1> {cd.name || 'CD not found'} </h1>
-                        <p><strong> Artist: </strong> {cd.artist} </p>
-                        <p><strong> Release Date: </strong> {cd.date} </p>
-                        {cd.imageUrl && (
-                            <img src={cd.imageUrl} alt={`${cd.name} cover`}/>
-                        )}
+                <div className="flex flex-col w-full">
+                    <div className="grid grid-cols-2 w-full">
+                        <div className="flex flex-col p-2 col-first gap-y-1">
+                            <h1 className="text-3xl text-black"> {cd.name || 'CD not found'} </h1>
+                            <Image src={cd.imageUrl} alt={`${cd.name} cover`} width={300} height={300}/>
+                            <h2 className="text-xl"> Artist: </h2>
+                            <p className="text-black">{cd.artist}</p>
+                            <h2 className="text-xl">Date Added: </h2>
+                            <p className="text-black">{cd.date} </p>
+                        </div>
+                        <div className="col-last">
+                            <h2 className="text-xl"> Track List: </h2>
+                            <ol className="list-decimal ml-6">
+                                {cd.tracklist.map((track, index) => (
+                                    <li key={index}>{track}</li>
+                                ))}
+                            </ol>
+                        </div>
                     </div>
-                    <div className="cdInfoRightSide">
-                        <h2> Track List: </h2>
-                        <ol>
-                            {cd.tracklist.map((track, index) => (
-                                <li key={index}>{track}</li>
-                            ))}
-                        </ol>
+                    <div className="mx-auto flex flex-box gap-x-10">
+                        <Link href={`/cd/${cd.id}`} passHref>
+                            <button className=" text-black bg-purple-500 px-4 py-3 hover:bg-white-900">
+                                Edit
+                            </button>
+                        </Link>
+                        <button
+                            onClick={handleDelete}
+                            className= " text-black bg-red-500 px-4 py-3 hover:bg-white-900">
+                            Delete
+                        </button>
                     </div>
                 </div>
             )}
