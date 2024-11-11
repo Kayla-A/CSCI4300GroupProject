@@ -1,17 +1,16 @@
 import React from 'react';
 
 const LoginForm = () => {
- 
   const containerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    backgroundColor: '#e6d0f5', 
+    backgroundColor: '#e6d0f5',
   };
 
   const formStyle = {
-    backgroundColor: '#ffffff', 
+    backgroundColor: '#ffffff',
     padding: '2rem',
     borderRadius: '12px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
@@ -22,7 +21,7 @@ const LoginForm = () => {
 
   const titleStyle = {
     fontSize: '1.5rem',
-    color: '#333', 
+    color: '#333',
     marginBottom: '1.5rem',
   };
 
@@ -41,7 +40,7 @@ const LoginForm = () => {
     padding: '0.75rem',
     borderRadius: '8px',
     border: 'none',
-    backgroundColor: '#333', 
+    backgroundColor: '#333',
     color: '#fff',
     fontSize: '1rem',
     fontWeight: 'bold',
@@ -54,25 +53,10 @@ const LoginForm = () => {
       <div style={formStyle}>
         <h2 style={titleStyle}>Login</h2>
         <form>
-          <input
-            type="email"
-            placeholder="Email"
-            style={inputStyle}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            style={inputStyle}
-            required
-          />
-          <button
-            type="submit"
-            style={buttonStyle}
-            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#555')}
-            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#333')}
-          >
-            Register
+          <input type="email" placeholder="Email" style={inputStyle} required />
+          <input type="password" placeholder="Password" style={inputStyle} required />
+          <button type="submit" style={buttonStyle}>
+            Log In
           </button>
         </form>
       </div>
@@ -81,5 +65,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-
