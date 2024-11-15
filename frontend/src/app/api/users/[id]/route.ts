@@ -27,15 +27,21 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     return NextResponse.json({ user }, { status: 200 });
 }
 
-//returns user object
+//returns user object with new cd
 export async function PUT(request: NextRequest, {params}: RouteParams) {
     const {id} =params;
-    const {cdCollection} = await request.json();
+    const {newCd} = await request.json();
     await connectMongoDB();
-    const user = await User.findByIdAndUpdate(id,{cdCollection}, {new:true});
-    if(!user){
-        return NextResponse.json({message:"User not found"}, {status: 400});
+    const user = await User.findById(id);
+    if(!user||!user.cdCollection){
+        return NextResponse.json({message:"User and/or user cds not found"}, {status: 400});
     }
+    user.cdCollection.push({
+        id: newCd.id,
+        name: newCd.name,
+        imgUrl: newCd.imgUrl
+    });
+    await user.save();
     return NextResponse.json({user}, {status: 200});
 }
 export async function DELETE(request:NextRequest, {params}: RouteParams) {
