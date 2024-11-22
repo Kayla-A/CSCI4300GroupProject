@@ -33,7 +33,9 @@ const Home = () => {
         throw new Error("AuthContext is not available");
     }
 
-    const { isLoggedIn, logout } = context;
+    const { isLoggedIn } = context;
+    const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+
 
 
     return (

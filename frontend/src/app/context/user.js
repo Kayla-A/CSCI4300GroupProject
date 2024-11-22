@@ -1,6 +1,7 @@
 "use client"
 import {createContext, useEffect, useState, ReactNode} from "react";
 import { useRouter } from "next/navigation";
+import {NextResponse as reponse} from "next/server";
 
 const AuthContext = createContext();
 
@@ -19,15 +20,24 @@ const AuthProvider = ({ children }) => {
 
     const login = async (username,password) => {
         try{
-            //post login request
-            const response = { data: { id: "12345" } }; // Mock response
-            setCheckID(response.data.id);
-            localStorage.setItem("userID", response.data.id);
+            const response = await fetch("http://localhost:3000/api/login",{
+                method: "POST",
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+            //const response = { data: { id: "12345" } }; // Mock response
+            setCheckID(data.user.id);
+            localStorage.setItem("userID", data.user.id);
             setIsLoggedIn(true);
-            /*
-            setCheckID(response.data.id);
-            localStorage.setItem("userID", response.data.id);
-            */
             console.log(isLoggedIn);
             router.push("/")
         } catch (error){

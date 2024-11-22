@@ -27,14 +27,14 @@ const LoginForm = () => {
     e.preventDefault();
     setError(''); // Reset error state
 
-    // Simple validation (you can expand this)
+    // Simple validation
     if (!username || !password) {
       setError('Please enter both username and password.');
       return;
     }
 
     try {
-      // Attempt login (calling the login function in context)
+      // Attempt login
       await login(username, password);
 
       // Redirect to home page upon successful login
