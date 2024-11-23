@@ -24,9 +24,8 @@ export default function SearchBar() {
             .then(result => result.json())
             .then(data => setAccessToken(data.access_token))
     }, []) // useEffect
+    
     // Get Spotify Access Token at app start up
-
-
     async function search() {
         console.log("Search for " + searchInput)
 
@@ -54,7 +53,7 @@ export default function SearchBar() {
     } // search
 
     console.log(albums)
-
+    
 
     return (
         <input
