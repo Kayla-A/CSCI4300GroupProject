@@ -4,6 +4,7 @@ import Image from "next/image";
 import {useContext} from "react";
 import { AuthContext } from "../context/user";
 import { useRouter } from "next/navigation";
+import SearchBar from "./searchBar";
 
 
 export default function NavBar() {
@@ -27,11 +28,14 @@ export default function NavBar() {
                     <div className="text-black text-2xl">Shelf Space</div>
                 </div>
                 <div className="flex-grow mx-4">
+                    <SearchBar></SearchBar>
+                {/*
                     <input
                         type="text"
                         className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Search..."
                     />
+                */}
                 </div>
                 {!isLoggedIn &&(
                     <Link href="../login">

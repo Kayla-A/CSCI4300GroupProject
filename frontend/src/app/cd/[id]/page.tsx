@@ -1,15 +1,15 @@
 "use client"
 import { useRouter } from "next/navigation";
-import {useContext, useEffect, useState,} from "react";
+import { useContext, useEffect, useState, } from "react";
 import NavBar from "@/app/components/navBar";
-import {AuthContext} from "@/app/context/user";
+import { AuthContext } from "@/app/context/user";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 // The CD's data to display
 type CDData = {
-    id:number;
+    id: number;
     name: string;
     artist: string;
     date: string;
@@ -17,7 +17,7 @@ type CDData = {
     tracklist: string[];
 } // CDData
 
-const CDDetails = ({params}) => {
+const CDDetails = ({ params }) => {
     const router = useRouter();
     const { id } = React.use(params); //DO NOT CHANGE!!!!!
     const context = useContext(AuthContext);
@@ -32,9 +32,10 @@ const CDDetails = ({params}) => {
         // fetch CD data using id if API avaliable 
         // don't have for now so use dummy data
         if (!id) return;
-        const urlId = parseInt(id as string,10);
-        const dummyCds : CDData[] = [
-            { id: 1, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles", date: "04/20/2001", tracklist: [
+        const urlId = parseInt(id as string, 10);
+        const dummyCds: CDData[] = [
+            {
+                id: 1, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles", date: "04/20/2001", tracklist: [
                     "Come Together",
                     "Something",
                     "Maxwell's Silver Hammer",
@@ -52,8 +53,10 @@ const CDDetails = ({params}) => {
                     "Carry That Weight",
                     "The End",
                     "Her Majesty"
-                ] },
-            { id: 2, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 2, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator", date: "04/20/2001", tracklist: [
                     "IGOR'S THEME",
                     "EARFQUAKE",
                     "I THINK",
@@ -65,8 +68,10 @@ const CDDetails = ({params}) => {
                     "WHAT'S GOOD",
                     "I DON'T LOVE YOU ANYMORE",
                     "ARE WE STILL FRIENDS? (BEST FRIEND?)"
-                ] },
-            { id: 3, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 3, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
                     "My Name Is Jonas",
                     "No One Else",
                     "The World Has Turned and Left Me Here",
@@ -76,8 +81,10 @@ const CDDetails = ({params}) => {
                     "Say It Ain't So",
                     "Holiday",
                     "Only in Dreams"
-                ] },
-            { id: 4, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 4, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
                     "My Name Is Jonas",
                     "No One Else",
                     "The World Has Turned and Left Me Here",
@@ -87,8 +94,10 @@ const CDDetails = ({params}) => {
                     "Say It Ain't So",
                     "Holiday",
                     "Only in Dreams"
-                ] },
-            { id: 5, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 5, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
                     "My Name Is Jonas",
                     "No One Else",
                     "The World Has Turned and Left Me Here",
@@ -98,8 +107,10 @@ const CDDetails = ({params}) => {
                     "Say It Ain't So",
                     "Holiday",
                     "Only in Dreams"
-                ] },
-            { id: 6, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 6, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
                     "My Name Is Jonas",
                     "No One Else",
                     "The World Has Turned and Left Me Here",
@@ -109,8 +120,10 @@ const CDDetails = ({params}) => {
                     "Say It Ain't So",
                     "Holiday",
                     "Only in Dreams"
-                ] },
-            { id: 7, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 7, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
                     "My Name Is Jonas",
                     "No One Else",
                     "The World Has Turned and Left Me Here",
@@ -120,8 +133,10 @@ const CDDetails = ({params}) => {
                     "Say It Ain't So",
                     "Holiday",
                     "Only in Dreams"
-                ] },
-            { id: 8, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer",  date: "04/20/2001", tracklist: [
+                ]
+            },
+            {
+                id: 8, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
                     "My Name Is Jonas",
                     "No One Else",
                     "The World Has Turned and Left Me Here",
@@ -131,13 +146,14 @@ const CDDetails = ({params}) => {
                     "Say It Ain't So",
                     "Holiday",
                     "Only in Dreams"
-                ] }
+                ]
+            }
         ];
         const cd = dummyCds.find(cd => cd.id === urlId);
         setCd(cd);
     }, [id]);
 
-    const handleDelete =(e) => {
+    const handleDelete = (e) => {
         e.preventDefault();
         alert("this will delete a cd one day");
         //delete api call
@@ -145,7 +161,7 @@ const CDDetails = ({params}) => {
 
     return (
         <div >
-             <NavBar></NavBar>
+            <NavBar></NavBar>
             {/*{!isLoggedIn && (
                 <p>NOT LOGGED IN</p>
             )}*/}
@@ -157,7 +173,7 @@ const CDDetails = ({params}) => {
                     <div className="grid grid-cols-2 w-full">
                         <div className="flex flex-col p-2 col-first gap-y-1">
                             <h1 className="text-3xl text-black"> {cd.name || 'CD not found'} </h1>
-                            <Image src={cd.imageUrl} alt={`${cd.name} cover`} width={300} height={300}/>
+                            <Image src={cd.imageUrl} alt={`${cd.name} cover`} width={300} height={300} />
                             <h2 className="text-xl"> Artist: </h2>
                             <p className="text-black">{cd.artist}</p>
                             <h2 className="text-xl">Date Added: </h2>
@@ -180,7 +196,7 @@ const CDDetails = ({params}) => {
                         </Link>
                         <button
                             onClick={handleDelete}
-                            className= " text-black bg-red-500 px-4 py-3 hover:bg-white-900">
+                            className=" text-black bg-red-500 px-4 py-3 hover:bg-white-900">
                             Delete
                         </button>
                     </div>
