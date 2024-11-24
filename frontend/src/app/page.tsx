@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useContext } from "react"
 import CdCardShelfList from "@/app/components/cdCardShelfList";
 import CdShelfCard from "@/app/components/cdShelfCard";
+import DisplayShelf from "@/app/components/displayShelf";
 
 type cd = {
     id: number;
@@ -42,11 +43,28 @@ const Home = () => {
         { id: 1, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
         { id: 2, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
         { id: 3, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
-        { id: 4, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
-        { id: 5, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 4, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 5, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
         { id: 6, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
-        { id: 7, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
-        { id: 8, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" }
+        { id: 7, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 8, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
+        { id: 9, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 10, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 11, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
+        { id: 12, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 13, name: "Abbey Road 10000", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 14, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
+        { id: 15, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 16, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 17, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
+        { id: 18, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 19, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 20, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
+        { id: 21, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 22, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
+        { id: 23, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator" },
+        { id: 24, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer" },
+        { id: 25, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles" },
     ];
 
 
@@ -85,30 +103,7 @@ const Home = () => {
             )}
             {isLoggedIn && (
                 <div>
-                    <div className="pt-4 mx-auto flex justify-center items-center">
-                        {/* Fixed width and height for the container */}
-                        <div className="mt-4 border-t-2 relative w-[625px] h-[870px]">
-                            {/* Background image */}
-                            <Image
-                                src="/shelf.png"
-                                alt="Shelf Background"
-                                width={1250}
-                                height={1740}
-                                objectFit="cover" // Cover the entire area without distortion
-                                priority
-                            />
-
-                            {/* Grid overlay */}
-                            <div className="absolute top-0 left-0 w-full h-full grid grid-cols-4 grid-rows-6 gap-4 mt-5 p-2">
-                                {/* Dynamically render the CDs */}
-                                {dummyCds.map((cd, index) => (
-                                    <div key={cd.id} className="flex flex-box align-bottom pb-1 ml-3">
-                                        <CdShelfCard id={cd.id} name={cd.name} imageUrl={cd.imageUrl} />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    <DisplayShelf cdArray = {dummyCds}></DisplayShelf>
                 </div>
             )}
         </div>
