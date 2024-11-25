@@ -46,6 +46,11 @@ export default function NavBar() {
                 }
                 {isLoggedIn && (
                     <>
+                    <Link href="../spotifyResults">
+                        <button className="px-4 py-3 hover:bg-white-900">
+                            Search 
+                          </button>
+                        </Link>
                         <Link href="../create-cd">
                             <button className="px-4 py-3 hover:bg-white-900">
                                 Add CD

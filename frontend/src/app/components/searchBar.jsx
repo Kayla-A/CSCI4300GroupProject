@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import AlbumCards from './albumCard'; 
 import { AuthContext } from "../context/user";
 import {useContext} from "react";
+import { useRouter } from "next/navigation";
 
 // The APi credentials for spotify
 const CLIENT_ID = "10e4f3b0a20a4ac8b9faa1370d67404f";
@@ -17,12 +18,13 @@ export default function SearchBar() {
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");   
     const [albums, setAlbums] = useState([]);
-   // const {isLoggedIn, logout} = useContext(AuthContext);
+    const {isLoggedIn, logout} = useContext(AuthContext);
+    const router = useRouter();
 
-   // const handleLogout = () => {
-  //      logout();
-  //      router.push("/");
-  //  };
+    const handleLogout = () => {
+        logout();
+        router.push("/");
+    };
 
     useEffect(() => {
         //API Access Token
@@ -95,13 +97,13 @@ return (
             
         /> 
 
+
         {/* // <div className="grid grid-cols-3 gap-4 mt-4">
         {albums.map((album, i) => (
           <AlbumCards key={i} album={album} />
     //     ))}
     //   </div> */}
      </div>  
-    
      ); // return
 
 }; // SearchBar 
