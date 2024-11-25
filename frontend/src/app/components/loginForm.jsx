@@ -30,17 +30,18 @@ const LoginForm = () => {
     // Simple validation
     if (!username || !password) {
       setError('Please enter both username and password.');
+      alert(error);
       return;
     }
 
     try {
       // Attempt login
       await login(username, password);
-
-      // Redirect to home page upon successful login
       router.push('/');
     } catch (err) {
       setError('Invalid username or password.'); // Display error if login fails
+      setUsername("");
+      setPassword("");
     }
   };
 
@@ -115,6 +116,7 @@ const LoginForm = () => {
                 Log In
               </button>
             </form>
+            <p>New User? <Link className="text-blue-700 underline" href="../registration">Create an Account</Link></p>
           </div>
         </div>
       </div>

@@ -39,7 +39,6 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem("userID", data.user.id);
             setIsLoggedIn(true);
             console.log(isLoggedIn);
-            router.push("/")
         } catch (error){
             console.log("login unsucessful");
             alert("username or password incorrect");
