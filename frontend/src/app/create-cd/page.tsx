@@ -26,6 +26,7 @@ const CreateCd = () => {
     const [cdId, setCdId] = useState("");
     const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
     const [error,setError] = useState("");
+    const[isSubmitting, setIsSubmitting] = useState(false);
 
     // @ts-ignore
     const handleDate = (e) => {
@@ -52,16 +53,16 @@ const CreateCd = () => {
             return;
         }
         const cdData = {
-            userID,
-            name,
-            artist,
-            date,
-            imageUrl,
-            tracklist,
+            user_id: userID,
+            name: name,
+            artist: artist,
+            imgUrl: imageUrl,
+            dateAdded: date,
+            tracklist: tracklist,
         };
         console.log(cdData);
         try {
-            const response = await fetch('http://localhost:3000/api/cds',{
+            const response = await fetch("http://localhost:3000/api/cds",{
                 method: "POST",
                 headers:{
                     'Content-Type': 'application/json',
@@ -70,22 +71,24 @@ const CreateCd = () => {
                     user_id: userID,
                     name: name,
                     artist: artist,
-                    dateAdded: date,
                     imgUrl: imageUrl,
+                    dateAdded: date,
                     tracklist: tracklist
                 })
             });
+
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
+            console.log(data.cd._id);
             setCdId(data.cd._id);
         } catch (err) {
             setError('failed to create cd');
             //alert(error);
         }
     };
-    const addCdtoUser = async () => {
+    const addCdToUser = async () => {
         try {
             const response = await fetch(`http://localhost:3000/api/users/${userID}`,{
                 method: "PUT",
@@ -96,8 +99,7 @@ const CreateCd = () => {
                     newCd: {
                         id: cdId,
                         name: name,
-                        artist: artist,
-                        imgUrl: imageUrl,
+                        imgUrl: imageUrl
                     }
                 })
             });
@@ -116,22 +118,28 @@ const CreateCd = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Disable the submit button to prevent multiple submissions
+        setIsSubmitting(true);
+
         try {
             // First, create the CD
             await createCD();
-
-            if(cdId){
+            console.log(cdId);
+            if (cdId) {
                 // Once the CD is created and the ID is set, add it to the user's collection
-                await addCdtoUser();
-            } else{
+                await addCdToUser();
+            } else {
                 console.log("community");
             }
-
         } catch (err) {
-            //setError('Failed to submit the CD');
+            setError('Failed to submit the CD');
             alert(error);
+        } finally {
+            // Re-enable the submit button
+            setIsSubmitting(false);
         }
     };
+
 
     return (
         <div>
@@ -141,7 +149,7 @@ const CreateCd = () => {
             )}*/}
             <div className= "flex flex-col justify-center">
                 <div>
-                    <form onSubmit={handleSubmit} className= "grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
                         <div className="col-first">
                             <div>
                                 <label className="text-lg text-black font-medium mb-1">CD Name</label>
@@ -194,6 +202,7 @@ const CreateCd = () => {
                         <button
                             type="submit"
                             className=" col-span-2 mt-4 px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+                            disabled={isSubmitting}
                         >
                             Submit
                         </button>
