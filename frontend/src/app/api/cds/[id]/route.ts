@@ -13,7 +13,7 @@ interface RouteParams{
 
 
 export async function GET(request: NextRequest, {params}: RouteParams) {
-    const {id} =params;
+    const {id} = await params;
     await connectMongoDB();
     const cd = await Cd.findOne( {_id: id} );
     return NextResponse.json({cd}, {status: 200});

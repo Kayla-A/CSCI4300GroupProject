@@ -1,40 +1,40 @@
 "use client"
-import {AuthContext} from "../../context/user";
+import { AuthContext } from "../../context/user";
 import Link from "next/link";
-import React, {useContext, useEffect, useState} from "react"
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../../components/navBar";
 import { useRouter } from 'next/navigation';
 
 type CDData = {
-    id: number;
+    id: string;
     name: string;
     artist: string;
     date: string;
-    imageUrl: string;
+    imgUrl: string;
     tracklist: string[];
-} // CDData
+};
 
-const EditCd = ({params}) => {
+const EditCd = ({ params }) => {
     const { id } = React.use(params);
     const context = useContext(AuthContext);
     const [cd, setCd] = useState<CDData | undefined>(undefined);
+    const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
 
     if (!context) {
         // Handle case where AuthContext is not available (should not happen)
         throw new Error("AuthContext is not available");
     }
-    const { isLoggedIn} = context;
+    const { isLoggedIn } = context;
 
     const router = useRouter();
 
-    const [name,setName] = useState('');
+    const [name, setName] = useState('');
     const [artist, setArtist] = useState('');
     const [date, setDate] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [tracklist, setTracklist] = useState<string[]>([]);
-    const [error,setError] = useState("");
+    const [error, setError] = useState('');
 
-    // @ts-ignore
     const handleDate = (e) => {
         let value = e.target.value.replace(/\D/g, ''); // Remove any non-digit characters
         if (value.length >= 2) {
@@ -48,141 +48,89 @@ const EditCd = ({params}) => {
         }
         setDate(value);
     };
-    useEffect(() => {
-        // fetch CD data using id if API avaliable
-        // don't have for now so use dummy data
-        if (!id) return;
-        const urlId = parseInt(id as string, 10);
-        const dummyCds: CDData[] = [
-            {
-                id: 1, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles", date: "04/20/2001", tracklist: [
-                    "Come Together",
-                    "Something",
-                    "Maxwell's Silver Hammer",
-                    "Oh! Darling",
-                    "Octopus's Garden",
-                    "I Want You (She’s So Heavy)",
-                    "Here Comes the Sun",
-                    "Because",
-                    "You Never Give Me Your Money",
-                    "Sun King",
-                    "Mean Mr. Mustard",
-                    "Polythene Pam",
-                    "She Came In Through the Bathroom Window",
-                    "Golden Slumbers",
-                    "Carry That Weight",
-                    "The End",
-                    "Her Majesty"
-                ]
-            },
-            {
-                id: 2, name: "Igor", imageUrl: "https://i.scdn.co/image/ab67616d00001e027005885df706891a3c182a57", artist: "Tyler The Creator", date: "04/20/2001", tracklist: [
-                    "IGOR'S THEME",
-                    "EARFQUAKE",
-                    "I THINK",
-                    "EXACTLY WHAT YOU RUN FROM YOU END UP CHASING",
-                    "RUNNING OUT OF TIME",
-                    "NEW MAGIC WAND",
-                    "A BOY IS A GUN*",
-                    "PUPPET",
-                    "WHAT'S GOOD",
-                    "I DON'T LOVE YOU ANYMORE",
-                    "ARE WE STILL FRIENDS? (BEST FRIEND?)"
-                ]
-            },
-            {
-                id: 3, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
-                    "My Name Is Jonas",
-                    "No One Else",
-                    "The World Has Turned and Left Me Here",
-                    "Buddy Holly",
-                    "Undone – The Sweater Song",
-                    "Surf Wax America",
-                    "Say It Ain't So",
-                    "Holiday",
-                    "Only in Dreams"
-                ]
-            },
-            {
-                id: 4, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
-                    "My Name Is Jonas",
-                    "No One Else",
-                    "The World Has Turned and Left Me Here",
-                    "Buddy Holly",
-                    "Undone – The Sweater Song",
-                    "Surf Wax America",
-                    "Say It Ain't So",
-                    "Holiday",
-                    "Only in Dreams"
-                ]
-            },
-            {
-                id: 5, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
-                    "My Name Is Jonas",
-                    "No One Else",
-                    "The World Has Turned and Left Me Here",
-                    "Buddy Holly",
-                    "Undone – The Sweater Song",
-                    "Surf Wax America",
-                    "Say It Ain't So",
-                    "Holiday",
-                    "Only in Dreams"
-                ]
-            },
-            {
-                id: 6, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
-                    "My Name Is Jonas",
-                    "No One Else",
-                    "The World Has Turned and Left Me Here",
-                    "Buddy Holly",
-                    "Undone – The Sweater Song",
-                    "Surf Wax America",
-                    "Say It Ain't So",
-                    "Holiday",
-                    "Only in Dreams"
-                ]
-            },
-            {
-                id: 7, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
-                    "My Name Is Jonas",
-                    "No One Else",
-                    "The World Has Turned and Left Me Here",
-                    "Buddy Holly",
-                    "Undone – The Sweater Song",
-                    "Surf Wax America",
-                    "Say It Ain't So",
-                    "Holiday",
-                    "Only in Dreams"
-                ]
-            },
-            {
-                id: 8, name: "Blue Album", imageUrl: "https://i.scdn.co/image/ab67616d00001e02345536847e60f622ee0eae96", artist: "Weezer", date: "04/20/2001", tracklist: [
-                    "My Name Is Jonas",
-                    "No One Else",
-                    "The World Has Turned and Left Me Here",
-                    "Buddy Holly",
-                    "Undone – The Sweater Song",
-                    "Surf Wax America",
-                    "Say It Ain't So",
-                    "Holiday",
-                    "Only in Dreams"
-                ]
+
+    const getCd = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/cds/${id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
             }
-        ];
-        const cd = dummyCds.find(cd => cd.id === urlId);
-        setCd(cd);
-        // @ts-ignore
-        setName(cd?.name);
-        // @ts-ignore
-        setDate(cd?.date);
-        // @ts-ignore
-        setArtist(cd?.artist);
-        // @ts-ignore
-        setImageUrl(cd?.imageUrl);
-        // @ts-ignore
-        setTracklist(cd?.tracklist);
+
+            const data = await response.json();
+            if (data.cd) {
+                const cd = {
+                    id: data.cd._id,
+                    name: data.cd.name,
+                    artist: data.cd.artist,
+                    date: data.cd.dateAdded,
+                    imgUrl: data.cd.imgUrl,
+                    tracklist: data.cd.tracklist
+                };
+                setCd(cd);
+            } else {
+                setError("CD not found");
+                alert("CD not found.");
+                router.push('/');
+            }
+        } catch (err) {
+            setError('Error fetching CD.');
+            alert('Error fetching CD.');
+            console.error(err);
+        }
+        console.log(cd);
+    };
+
+    useEffect(() => {
+        // Only fetch CD data when id is available and set form data
+        if (!id) return;
+
+        getCd();
     }, [id]);
 
+    useEffect(() => {
+        // Update form data only after CD data is fetched
+        if (cd) {
+            setName(cd.name);
+            setDate(cd.date);
+            setArtist(cd.artist);
+            setImageUrl(cd.imgUrl);
+            setTracklist(cd.tracklist);
+        }
+    }, [cd]);
+
+    const editCd = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/cds/${cd?.id}`,{
+                method: "PUT",
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: userID,
+                    name: name,
+                    artist: artist,
+                    imgUrl: imageUrl,
+                    dateAdded: date,
+                    tracklist: tracklist
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log(data);
+        } catch (err) {
+            setError('failed to create cd');
+            //alert(error);
+        }
+    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -194,21 +142,21 @@ const EditCd = ({params}) => {
             imageUrl,
             tracklist,
         };
-        //put request
+
+        // PUT request to update the CD
+        editCd();
 
         console.log("Submitted CD:", cdData);
-        router.push('/'); //return home
+        // You would typically send this data to your backend for updating
+        router.push('/'); // Redirect home
     };
 
     return (
         <div>
-            <NavBar></NavBar>
-            {/*{!isLoggedIn && (
-                <p>NOT LOGGED IN</p>
-            )}*/}
-            <div className= "flex flex-col justify-center">
+            <NavBar />
+            <div className="flex flex-col justify-center">
                 <div>
-                    <form onSubmit={handleSubmit} className= "grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
                         <div className="col-first">
                             <div>
                                 <label className="text-lg text-black font-medium mb-1">CD Name</label>
@@ -238,8 +186,7 @@ const EditCd = ({params}) => {
                                 />
                             </div>
                             <div>
-                                <label className="text-lg text-black font-medium mb-1">CD Cover Art(1:1 aspect ratio
-                                    preferred)</label>
+                                <label className="text-lg text-black font-medium mb-1">CD Cover Art (1:1 aspect ratio preferred)</label>
                                 <input
                                     type="text"
                                     value={imageUrl}
@@ -260,17 +207,15 @@ const EditCd = ({params}) => {
                         </div>
                         <button
                             type="submit"
-                            className=" col-span-2 mt-4 px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+                            className="col-span-2 mt-4 px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
                         >
                             Submit
                         </button>
                     </form>
                 </div>
             </div>
-        </div>//wrapping div
+        </div>
     );
 };
 
 export default EditCd;
-
-

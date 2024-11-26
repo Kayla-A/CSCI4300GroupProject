@@ -9,7 +9,7 @@ import Link from "next/link";
 
 // The CD's data to display
 type CDData = {
-    id: number;
+    id: string;
     name: string;
     artist: string;
     date: string;
@@ -26,7 +26,7 @@ const CDDetails = ({ params }) => {
     const [error,setError] = useState("");
 
 
-    const getCd = async (id) => {
+    const getCd = async () => {
         try {
             const response = await fetch(`http://localhost:3000/api/cds/${id}`, {
                 method: "GET",
@@ -46,6 +46,7 @@ const CDDetails = ({ params }) => {
                     id: data.cd._id,
                     name: data.cd.name,
                     artist: data.cd.artist,
+                    date: data.cd.dateAdded,
                     imgUrl: data.cd.imgUrl,
                     tracklist: data.cd.tracklist
                 }
@@ -69,8 +70,7 @@ const CDDetails = ({ params }) => {
     useEffect(() => {
         // fetch CD data using id
         if (!id) return;
-        const urlId = parseInt(id as string, 10);
-        getCd(urlId);
+        getCd();
         // don't have for now so use dummy data
 /*
         const dummyCds: CDData[] = [
@@ -194,7 +194,7 @@ const CDDetails = ({ params }) => {
  */
         //setCd(cd);
 
-    }, [id]);
+    }, []);
 
     const handleDelete = async (e) => {
         e.preventDefault();
