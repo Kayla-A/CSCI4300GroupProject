@@ -31,7 +31,8 @@ const EditCd = ({params}) => {
     const [artist, setArtist] = useState('');
     const [date, setDate] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [tracklist, setTracklist] = useState<string[]>([])
+    const [tracklist, setTracklist] = useState<string[]>([]);
+    const [error,setError] = useState("");
 
     // @ts-ignore
     const handleDate = (e) => {

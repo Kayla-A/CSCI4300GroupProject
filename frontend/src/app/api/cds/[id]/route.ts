@@ -21,7 +21,7 @@ export async function GET(request: NextRequest, {params}: RouteParams) {
 
 //returns cd object should update cd in user array
 export async function PUT(request: NextRequest, {params}: RouteParams) {
-    const {id} = params;
+    const {id} = await params;
     const {user_id, name, artist, imgUrl, dateAdded, tracklist} = await request.json();
     await connectMongoDB();
     const cd = await Cd.findByIdAndUpdate(id,{user_id, name, artist, imgUrl, dateAdded, tracklist}, {new:true});
@@ -50,7 +50,7 @@ export async function PUT(request: NextRequest, {params}: RouteParams) {
 }
 //this should also delete from the user's array
 export async function DELETE(request:NextRequest, {params}: RouteParams) {
-    const {id} = params;
+    const {id} = await params;
     if(!mongoose.Types.ObjectId.isValid(id)){
         return NextResponse.json({message:"Cd id is invalid"}, {status: 400});
     }

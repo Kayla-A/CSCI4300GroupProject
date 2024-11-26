@@ -23,6 +23,9 @@ const CreateCd = () => {
     const [date, setDate] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [tracklist, setTracklist] = useState<string[]>([])
+    const [cdId, setCdId] = useState("");
+    const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+    const [error,setError] = useState("");
 
     // @ts-ignore
     const handleDate = (e) => {
@@ -43,28 +46,91 @@ const CreateCd = () => {
         setDate(now.toLocaleDateString('en-US')); // Format and set the date
     }, []);
 
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // post to backend
+    const createCD = async () => {
+        if (!userID || !name || !artist || !imageUrl || tracklist.length === 0) {
+            setError('Please fill in all fields.');
+            return;
+        }
         const cdData = {
+            userID,
             name,
             artist,
             date,
             imageUrl,
             tracklist,
         };
+        console.log(cdData);
+        try {
+            const response = await fetch('http://localhost:3000/api/cds',{
+                method: "POST",
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: userID,
+                    name: name,
+                    artist: artist,
+                    dateAdded: date,
+                    imgUrl: imageUrl,
+                    tracklist: tracklist
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+            setCdId(data.cd._id);
+        } catch (err) {
+            setError('failed to create cd');
+            //alert(error);
+        }
+    };
+    const addCdtoUser = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/users/${userID}`,{
+                method: "PUT",
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    newCd: {
+                        id: cdId,
+                        name: name,
+                        artist: artist,
+                        imgUrl: imageUrl,
+                    }
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+            router.push('/');
+        } catch (err) {
+            setError('failed to add cd');
+            //alert(error);
+        }
+    };
 
-        console.log("Submitted CD:", cdData);
-    //clear form
-        setName('');
-        setArtist('');
-        setDate('');
-        setImageUrl('');
-        setTracklist([]);
 
-        router.push('/'); //return home
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            // First, create the CD
+            await createCD();
+
+            if(cdId){
+                // Once the CD is created and the ID is set, add it to the user's collection
+                await addCdtoUser();
+            } else{
+                console.log("community");
+            }
+
+        } catch (err) {
+            //setError('Failed to submit the CD');
+            alert(error);
+        }
     };
 
     return (

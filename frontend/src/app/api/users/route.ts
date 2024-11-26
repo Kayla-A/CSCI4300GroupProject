@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({message:"Username taken"}, {status: 400});
     }
     const newUser = await User.create({username, password: hashPass});
-    return NextResponse.json({message:"User created sucessfully", user: newUser}, {status: 201});
+    return NextResponse.json({message:"User created sucessfully", user: newUser}, {status: 200});
 }
 
 

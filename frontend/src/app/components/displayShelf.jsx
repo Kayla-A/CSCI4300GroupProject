@@ -40,6 +40,7 @@ export default function DisplayShelf(props) {
       }
     }
     useEffect(() => {
+        console.log(props.cdArray);
         setFirst();
     }, [props.cdArray]);
 
@@ -62,7 +63,7 @@ export default function DisplayShelf(props) {
                     {/* Dynamically render the CDs */}
                     {displayCds.map((cd, index) => (
                         <div key={cd.id} className="flex flex-box align-bottom pb-1 ml-3">
-                            <CdShelfCard id={cd.id} name={cd.name} imageUrl={cd.imageUrl}/>
+                            <CdShelfCard id={cd.id} name={cd.name} imgUrl={cd.imgUrl}/>
                         </div>
                     ))}
                 </div>

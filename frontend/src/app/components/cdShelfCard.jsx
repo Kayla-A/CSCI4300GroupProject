@@ -16,6 +16,7 @@ const CdShelfCard = (props) => {
         } else{
             setName(props.name);
         }
+        console.log(props.imgUrl);
     }, [props.name]);
 
     return (
@@ -47,7 +48,7 @@ const CdShelfCard = (props) => {
             </style>
             <Link className=" flex flex-col justify-center mx-auto h-200 w-auto items-center" href={`/cd/${props.id}`}
                   passHref>
-                <Image width={100} height={100} src={props.imageUrl} alt={props.name}></Image>
+                <Image width={100} height={100} src={props.imgUrl} alt={props.name}></Image>
                 <p className="mt-2 text-black relative hover-container">
                     {name}
                     {cutOff && (

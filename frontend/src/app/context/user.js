@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
             const data = await response.json();
             //const response = { data: { id: "12345" } }; // Mock response
             setCheckID(data.user.id);
-            localStorage.setItem("userID", data.user.id);
+            localStorage.setItem("userID", data.user._id);
             setIsLoggedIn(true);
             console.log(isLoggedIn);
         } catch (error){

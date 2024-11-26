@@ -12,7 +12,7 @@ interface RouteParams{
 
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
-    const { id } = params;
+    const { id } = await params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return NextResponse.json({ message: "Invalid user ID" }, { status: 400 });
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
 //returns user object with new cd
 export async function PUT(request: NextRequest, {params}: RouteParams) {
-    const {id} =params;
+    const {id} = await params;
     const {newCd} = await request.json();
     await connectMongoDB();
     const user = await User.findById(id);

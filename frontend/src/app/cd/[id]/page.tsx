@@ -13,7 +13,7 @@ type CDData = {
     name: string;
     artist: string;
     date: string;
-    imageUrl: string;
+    imgUrl: string;
     tracklist: string[];
 } // CDData
 
@@ -22,7 +22,45 @@ const CDDetails = ({ params }) => {
     const { id } = React.use(params); //DO NOT CHANGE!!!!!
     const context = useContext(AuthContext);
     const { isLoggedIn, logout } = context;
-    const [cd, setCd] = useState<CDData | undefined>(undefined);
+    const [cd, setCd] = useState<any| undefined>(undefined);
+    const [error,setError] = useState("");
+
+
+    const getCd = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/cds/${id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            if(data.cd){
+                const cd = {
+                    id: data.cd._id,
+                    name: data.cd.name,
+                    artist: data.cd.artist,
+                    imgUrl: data.cd.imgUrl,
+                    tracklist: data.cd.tracklist
+                }
+                setCd(cd);
+            } else{
+                alert("wrong response?");
+            }
+
+        } catch (err) {
+            setError('Cd not found.');
+            alert('Cd not found.');
+            console.error(err);
+            router.push('/');
+        }
+    };
 
 
 
@@ -30,9 +68,11 @@ const CDDetails = ({ params }) => {
 
     useEffect(() => {
         // fetch CD data using id
-        // don't have for now so use dummy data
         if (!id) return;
         const urlId = parseInt(id as string, 10);
+        getCd(urlId);
+        // don't have for now so use dummy data
+/*
         const dummyCds: CDData[] = [
             {
                 id: 1, name: "Abbey Road", imageUrl: "https://i.scdn.co/image/ab67616d00001e02dc30583ba717007b00cceb25", artist: "The Beatles", date: "04/20/2001", tracklist: [
@@ -150,13 +190,35 @@ const CDDetails = ({ params }) => {
             }
         ];
         const cd = dummyCds.find(cd => cd.id === urlId);
-        setCd(cd);
+
+ */
+        //setCd(cd);
+
     }, [id]);
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.preventDefault();
         alert("this will delete a cd one day");
         //delete api call
+        try {
+            const response = await fetch(`http://localhost:3000/cds/${id}`,{
+                method: "DELETE",
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+
+            // Redirect to login
+            router.push('/');
+        } catch (err) {
+            setError('Cd Delete failed');
+            alert(error);
+
+        }
     };
 
     return (
@@ -173,7 +235,7 @@ const CDDetails = ({ params }) => {
                     <div className="grid grid-cols-2 w-full">
                         <div className="flex flex-col p-2 col-first gap-y-1">
                             <h1 className="text-3xl text-black"> {cd.name || 'CD not found'} </h1>
-                            <Image src={cd.imageUrl} alt={`${cd.name} cover`} width={300} height={300} />
+                            <Image src={cd.imgUrl} alt={`${cd.name} cover`} width={300} height={300} />
                             <h2 className="text-xl"> Artist: </h2>
                             <p className="text-black">{cd.artist}</p>
                             <h2 className="text-xl">Date Added: </h2>

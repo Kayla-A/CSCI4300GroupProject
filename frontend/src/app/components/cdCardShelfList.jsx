@@ -12,7 +12,7 @@ const CdCardShelfList = (props) => {
                 id = {cd.id}
                 name = {cd.name}
                 dateAdded = {cd.date}
-                imageUrl = {cd.imageUrl}
+                imgUrl = {cd.imgUrl}
                 tracklist = {cd.tracklist}
                 artist = {cd.artist}
                 />

@@ -14,8 +14,12 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     const {user_id, name, artist, imgUrl, dateAdded, tracklist} = await request.json();
     await connectMongoDB();
-    await Cd.create({user_id, name, artist, imgUrl, dateAdded, tracklist});
-    return NextResponse.json({message:"Cd created sucessfully"}, {status: 201});
+    const newCd = await Cd.create({user_id, name, artist, imgUrl, dateAdded, tracklist}, {new:true});
+    if(!newCd){
+        return NextResponse.json({message:"cd not created"}, {status: 500});
+    } else{
+        return NextResponse.json({message:"Cd created sucessfully", cd: newCd}, {status: 201});
+    }
 }
 
 

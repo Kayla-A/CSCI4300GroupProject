@@ -3,10 +3,11 @@ import Image from "next/image";
 import NavBar from "./components/navBar"
 import { AuthContext } from "./context/user";
 import Link from "next/link";
-import { useContext } from "react"
+import {useContext, useEffect, useState} from "react"
 import CdCardShelfList from "@/app/components/cdCardShelfList";
 import CdShelfCard from "@/app/components/cdShelfCard";
 import DisplayShelf from "@/app/components/displayShelf";
+import {useRouter} from "next/navigation";
 
 type cd = {
     id: number;
@@ -69,6 +70,9 @@ const Home = () => {
 
 
     const context = useContext(AuthContext);
+    const [error, setError] = useState("");
+    const router = useRouter();
+    const [cdCollection, setCdCollection] = useState([]);
 
     if (!context) {
         throw new Error("AuthContext is not available");
@@ -76,6 +80,46 @@ const Home = () => {
 
     const { isLoggedIn } = context;
     const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+
+    const getCdArray = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/users/${userID}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.user.cdCollection) {
+                const cdDataArray = data.user.cdCollection.map(cd => ({
+                    id: cd.id,
+                    name: cd.name,
+                    imgUrl: cd.imgUrl,
+                }));
+
+                setCdCollection(cdDataArray);
+                console.log(cdDataArray);
+            } else {
+                alert("CD collection is undefined.");
+            }
+
+        } catch (err) {
+            setError('CDs not found.');
+            alert(error);
+        }
+    };
+
+    useEffect( () => {
+        if(userID){
+            getCdArray();
+        }
+    }, []);
 
 
 
@@ -103,7 +147,7 @@ const Home = () => {
             )}
             {isLoggedIn && (
                 <div>
-                    <DisplayShelf cdArray = {dummyCds}></DisplayShelf>
+                    <DisplayShelf cdArray = {cdCollection}></DisplayShelf>
                 </div>
             )}
         </div>
