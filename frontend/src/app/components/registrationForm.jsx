@@ -5,7 +5,7 @@ import Link from "next/link";
 import {useContext} from "react"
 import {useRouter} from "next/navigation";
 import NavBar from "../components/navBar";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const RegistrationForm = () => {
@@ -22,6 +22,11 @@ const RegistrationForm = () => {
     const [username,setUsername] = useState('');
     const [password, setPassword] = useState('');
     const[error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -120,17 +125,32 @@ const RegistrationForm = () => {
                             onChange={(e) => setUsername(e.target.value)}
                             className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"/>
                         <label className="text-lg text-black font-medium mb-1">Password*</label>
-                        <input
-                            type="text"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
-                        />
+                        <div className="relative flex items-center mb-4">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                aria-label="Password"
+                            />
+                            <div
+                                onClick={togglePasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? (
+                                    <FaEyeSlash className="text-gray-600"/>
+                                ) : (
+                                    <FaEye className="text-gray-600"/>
+                                )}
+                            </div>
+                        </div>
                         <button type="submit" style={buttonStyle}>
                             Create Account
                         </button>
                     </form>
-                    <p>Already have an account? <Link href="../login" className="text-blue-700 underline">Login</Link> </p>
+                    <p>Already have an account? <Link href="../login" className="text-blue-700 underline">Login</Link>
+                    </p>
                 </div>
             </div>
         </div>

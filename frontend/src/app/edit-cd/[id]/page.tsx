@@ -1,13 +1,10 @@
 "use client"
-import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState, } from "react";
-import NavBar from "@/app/components/navBar";
-import { AuthContext } from "@/app/context/user";
-import React from "react";
-import Image from "next/image";
+import {AuthContext} from "../../context/user";
 import Link from "next/link";
+import React, {useContext, useEffect, useState} from "react"
+import NavBar from "../../components/navBar";
+import { useRouter } from 'next/navigation';
 
-// The CD's data to display
 type CDData = {
     id: number;
     name: string;
@@ -17,19 +14,41 @@ type CDData = {
     tracklist: string[];
 } // CDData
 
-const CDDetails = ({ params }) => {
-    const router = useRouter();
-    const { id } = React.use(params); //DO NOT CHANGE!!!!!
+const EditCd = ({params}) => {
+    const { id } = React.use(params);
     const context = useContext(AuthContext);
-    const { isLoggedIn, logout } = context;
     const [cd, setCd] = useState<CDData | undefined>(undefined);
 
+    if (!context) {
+        // Handle case where AuthContext is not available (should not happen)
+        throw new Error("AuthContext is not available");
+    }
+    const { isLoggedIn} = context;
 
+    const router = useRouter();
 
-    // Dummy data for now !!!!!!!!!!!!!!!!!!!!!!
+    const [name,setName] = useState('');
+    const [artist, setArtist] = useState('');
+    const [date, setDate] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+    const [tracklist, setTracklist] = useState<string[]>([])
 
+    // @ts-ignore
+    const handleDate = (e) => {
+        let value = e.target.value.replace(/\D/g, ''); // Remove any non-digit characters
+        if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2); // Insert the slash after MM
+        }
+        if (value.length >= 5) {
+            value = value.slice(0, 5) + '/' + value.slice(2); // Insert the slash after DD
+        }
+        if (value.length > 10) {
+            value = value.slice(0, 10); // Limit input to MM/DD/YYYY format
+        }
+        setDate(value);
+    };
     useEffect(() => {
-        // fetch CD data using id
+        // fetch CD data using id if API avaliable
         // don't have for now so use dummy data
         if (!id) return;
         const urlId = parseInt(id as string, 10);
@@ -151,60 +170,106 @@ const CDDetails = ({ params }) => {
         ];
         const cd = dummyCds.find(cd => cd.id === urlId);
         setCd(cd);
+        // @ts-ignore
+        setName(cd?.name);
+        // @ts-ignore
+        setDate(cd?.date);
+        // @ts-ignore
+        setArtist(cd?.artist);
+        // @ts-ignore
+        setImageUrl(cd?.imageUrl);
+        // @ts-ignore
+        setTracklist(cd?.tracklist);
     }, [id]);
 
-    const handleDelete = (e) => {
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        alert("this will delete a cd one day");
-        //delete api call
+
+        const cdData = {
+            name,
+            artist,
+            date,
+            imageUrl,
+            tracklist,
+        };
+        //put request
+
+        console.log("Submitted CD:", cdData);
+        router.push('/'); //return home
     };
 
     return (
-        <div >
+        <div>
             <NavBar></NavBar>
             {/*{!isLoggedIn && (
                 <p>NOT LOGGED IN</p>
             )}*/}
-            {cd == undefined && (
-                <p>Cd not found</p>
-            )}
-            {cd != undefined && (
-                <div className="flex flex-col w-full">
-                    <div className="grid grid-cols-2 w-full">
-                        <div className="flex flex-col p-2 col-first gap-y-1">
-                            <h1 className="text-3xl text-black"> {cd.name || 'CD not found'} </h1>
-                            <Image src={cd.imageUrl} alt={`${cd.name} cover`} width={300} height={300} />
-                            <h2 className="text-xl"> Artist: </h2>
-                            <p className="text-black">{cd.artist}</p>
-                            <h2 className="text-xl">Date Added: </h2>
-                            <p className="text-black">{cd.date} </p>
+            <div className= "flex flex-col justify-center">
+                <div>
+                    <form onSubmit={handleSubmit} className= "grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
+                        <div className="col-first">
+                            <div>
+                                <label className="text-lg text-black font-medium mb-1">CD Name</label>
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-lg text-black font-medium mb-1">Artist</label>
+                                <input
+                                    type="text"
+                                    value={artist}
+                                    onChange={(e) => setArtist(e.target.value)}
+                                    className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-lg text-black font-medium mb-1">Date Added</label>
+                                <input
+                                    type="text"
+                                    value={date}
+                                    onChange={handleDate}
+                                    className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-lg text-black font-medium mb-1">CD Cover Art(1:1 aspect ratio
+                                    preferred)</label>
+                                <input
+                                    type="text"
+                                    value={imageUrl}
+                                    onChange={(e) => setImageUrl(e.target.value)}
+                                    className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                />
+                            </div>
                         </div>
                         <div className="col-last">
-                            <h2 className="text-xl"> Track List: </h2>
-                            <ol className="list-decimal ml-6">
-                                {cd.tracklist.map((track, index) => (
-                                    <li key={index}>{track}</li>
-                                ))}
-                            </ol>
+                            <label className="text-lg text-black font-medium mb-1">Tracklist</label>
+                            <textarea
+                                value={tracklist.join("\n")}
+                                onChange={(e) => setTracklist(e.target.value.split("\n"))}
+                                className="w-full h-full mr-4 p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                rows={4}
+                                placeholder="Enter each track on a new line"
+                            />
                         </div>
-                    </div>
-                    <div className="mx-auto flex flex-box gap-x-10">
-                        <Link href={`/edit-cd/${cd.id}`} passHref>
-                            <button className=" text-black bg-purple-500 px-4 py-3 hover:bg-white-900">
-                                Edit
-                            </button>
-                        </Link>
                         <button
-                            onClick={handleDelete}
-                            className=" text-black bg-red-500 px-4 py-3 hover:bg-white-900">
-                            Delete
+                            type="submit"
+                            className=" col-span-2 mt-4 px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+                        >
+                            Submit
                         </button>
-                    </div>
+                    </form>
                 </div>
-            )}
-        </div>
+            </div>
+        </div>//wrapping div
     );
-}; //CDDetails
+};
 
-export default CDDetails;
+export default EditCd;
+
 
