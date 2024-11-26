@@ -28,7 +28,10 @@ export default function NavBar() {
                     <div className="text-black text-2xl">Shelf Space</div>
                 </div>
                 <div className="flex-grow mx-4">
-                    <SearchBar></SearchBar>
+                    {/* <SearchBar></SearchBar> */}
+                    <Link href="./spotifyResults">
+                        <button type = "button"> Search by albums using Spotify</button>
+                    </Link>
                 {/*
                     <input
                         type="text"

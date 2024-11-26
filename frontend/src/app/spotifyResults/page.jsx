@@ -1,30 +1,30 @@
+"use client"
 import { responseCookiesToRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import React from "react";
 import {useState, useEffect} from "react";
-import AlbumCards from './albumCard'; 
+import AlbumCards from '../components/albumCard'; 
+import Link from "next/link";
 import { AuthContext } from "../context/user";
 import {useContext} from "react";
-import { useRouter } from "next/navigation";
 
 // The APi credentials for spotify
 const CLIENT_ID = "10e4f3b0a20a4ac8b9faa1370d67404f";
 const CLIENT_SECRET = "f3724e5a5318407c83fef45cf7d6eaa8";
 
 // To proffessor: Kayla also worked on this too with live share. It may not show my name/edits on GitHub
-export default function SearchBar() {
+const SpotifyResults = () => {
 
     // State variables are in charge of holding the search results from the user input, 
     // store the token retreived from the api, and storing the ablums retreived from the qapi
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");   
     const [albums, setAlbums] = useState([]);
-    const {isLoggedIn, logout} = useContext(AuthContext);
-    const router = useRouter();
+   // const {isLoggedIn, logout} = useContext(AuthContext);
 
-    const handleLogout = () => {
-        logout();
-        router.push("/");
-    };
+   // const handleLogout = () => {
+  //      logout();
+  //      router.push("/");
+  //  };
 
     useEffect(() => {
         //API Access Token
@@ -97,14 +97,19 @@ return (
             
         /> 
 
+        <Link href = "/">
+        <button type = "button"> Click here to return to shelf</button>
+        </Link>
 
-        {/* // <div className="grid grid-cols-3 gap-4 mt-4">
-        {albums.map((album, i) => (
-          <AlbumCards key={i} album={album} />
-    //     ))}
-    //   </div> */}
+        <div className="grid grid-cols-3 gap-4 mt-4">
+          {albums.map((album, i) => (
+            <AlbumCards key={i} album={album} />
+          ))}
+       </div> 
      </div>  
+    
      ); // return
 
 }; // SearchBar 
 
+export default SpotifyResults;
