@@ -198,28 +198,38 @@ const CDDetails = ({ params }) => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        alert("this will delete a cd one day");
-        //delete api call
+
+        if (!cd.id) {
+            alert("No CD id provided.");
+            return;
+        }
+
+        const confirmDelete = window.confirm("Are you sure you want to delete this CD?");
+        if (!confirmDelete) {
+            return;
+        }
+
         try {
-            const response = await fetch(`http://localhost:3000/cds/${id}`,{
+            const response = await fetch(`http://localhost:3000/api/cds/${cd.id}`, {
                 method: "DELETE",
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                 },
             });
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const data = await response.json();
 
-            // Redirect to login
+            if (!response.ok) {
+                throw new Error(`Failed to delete CD. Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+
             router.push('/');
         } catch (err) {
-            setError('Cd Delete failed');
-            alert(error);
-
+            alert(`Error deleting CD: ${err.message}`);
         }
     };
+
 
     return (
         <div >
