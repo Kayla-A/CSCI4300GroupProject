@@ -150,7 +150,7 @@ const CreateCd = () => {
             )}
             {isLoggedIn && (
                 <div className="flex flex-col justify-center">
-                    <div>
+                    <div className="bg-white rounded-lg ml-8 mr-8 mt-1 mb-1">
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
                             <div className="col-first">
                                 <div>
