@@ -111,7 +111,6 @@ const RegistrationForm = () => {
 
     return (
         <div>
-            <NavBar></NavBar>
             <div style={containerStyle}>
                 <div style={formStyle}>
                     <h2 style={titleStyle}>Create an Account</h2>

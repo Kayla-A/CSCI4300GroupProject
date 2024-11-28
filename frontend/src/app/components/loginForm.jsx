@@ -95,7 +95,6 @@ const LoginForm = () => {
 
   return (
       <div>
-        <NavBar></NavBar>
         <div style={containerStyle}>
           <div style={formStyle}>
             <h2 style={titleStyle}>Login</h2>
