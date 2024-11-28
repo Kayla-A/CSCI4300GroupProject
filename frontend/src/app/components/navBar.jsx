@@ -42,7 +42,7 @@ export default function NavBar() {
                 </div>
                 {!isLoggedIn &&(
                     <Link href="../login">
-                    <button className="bg-pink-500 text-white px-4 py-3 hover:bg-white hover:text-black">
+                    <button className="rounded bg-pink-500 text-white px-4 py-3 hover:bg-white hover:text-black">
                     Login
                     </button>
                     </Link>)
@@ -59,7 +59,7 @@ export default function NavBar() {
                                 Add CD
                             </button>
                         </Link>
-                        <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-3 hover:bg-white hover:text-black">
+                        <button onClick={handleLogout} className=" rounded bg-red-500 text-white px-4 py-3 hover:bg-white hover:text-black">
                             Logout
                         </button>
                     </>

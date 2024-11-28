@@ -136,12 +136,12 @@ const Home = () => {
                     <p className="text-black">See your Cd collection wherever whenever</p>
                     <div className="flex items-center mx-auto gap-4 ">
                         <Link href="./login">
-                            <button className=" text-black bg-purple-100 px-4 py-3 hover:bg-white-900">
+                            <button className=" rounded text-black bg-purple-100 px-4 py-3 hover:bg-white-900">
                                 Login
                             </button>
                         </Link>
                         <Link href="./registration">
-                            <button className=" text-black bg-purple-100 px-4 py-3 hover:bg-white-900">
+                            <button className=" rounded text-black bg-purple-100 px-4 py-3 hover:bg-white-900">
                                 Register
                             </button>
                         </Link>
