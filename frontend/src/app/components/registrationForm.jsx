@@ -30,15 +30,13 @@ const RegistrationForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Reset error state
-
-        // Simple validation
-        if (!username || !password) {
-            setError('Please enter both username and password.');
-            return;
-        }
 
         try {
+            if (!username || !password) {
+                alert('Please enter both username and password.');
+                throw Error;
+            }
+
             const response = await fetch("http://localhost:3000/api/users",{
                 method: "POST",
                 headers:{
@@ -50,18 +48,18 @@ const RegistrationForm = () => {
                 })
             });
             if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
+                alert('Username taken.');
+                throw Error(`Response status: ${response.status}`);
             }
             const data = await response.json();
 
             // Redirect to login
             router.push('/login');
         } catch (err) {
-            setError('Username taken.');
-            alert(error);
             setUsername("");
             setPassword("");
         }
+        setError(''); // Reset error state
     };
 
     const containerStyle = {

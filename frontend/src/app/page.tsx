@@ -73,6 +73,7 @@ const Home = () => {
     const [error, setError] = useState("");
     const router = useRouter();
     const [cdCollection, setCdCollection] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     if (!context) {
         throw new Error("AuthContext is not available");
@@ -82,6 +83,7 @@ const Home = () => {
     const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
 
     const getCdArray = async () => {
+        setLoading(true);
         try {
             const response = await fetch(`http://localhost:3000/api/users/${userID}`, {
                 method: "GET",
@@ -108,9 +110,10 @@ const Home = () => {
             } else {
                 alert("CD collection is undefined.");
             }
-
+            setLoading(false);
         } catch (err) {
-            setError('CDs not found.');
+            setLoading(false);
+            error('CDs not found.');
             alert(error);
         }
     };
@@ -145,7 +148,10 @@ const Home = () => {
                     </div>
                 </div>
             )}
-            {isLoggedIn && (
+            {loading && isLoggedIn && (
+                <p>Loading...</p>
+            )}
+            {!loading && isLoggedIn && (
                 <div>
                     <DisplayShelf cdArray = {cdCollection}></DisplayShelf>
                 </div>

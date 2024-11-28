@@ -6,6 +6,7 @@ import { AuthContext } from "@/app/context/user";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import RestrictedAccess from "@/app/components/restrictedAccess";
 
 // The CD's data to display
 type CDData = {
@@ -24,10 +25,12 @@ const CDDetails = ({ params }) => {
     const { isLoggedIn, logout } = context;
     const [cd, setCd] = useState<any| undefined>(undefined);
     const [error,setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
 
     const getCd = async () => {
         try {
+            setLoading(true)
             const response = await fetch(`http://localhost:3000/api/cds/${id}`, {
                 method: "GET",
                 headers: {
@@ -36,6 +39,7 @@ const CDDetails = ({ params }) => {
             });
 
             if (!response.ok) {
+                setLoading(false);
                 throw new Error(`Response status: ${response.status}`);
             }
 
@@ -54,7 +58,7 @@ const CDDetails = ({ params }) => {
             } else{
                 alert("wrong response?");
             }
-
+            setLoading(false);
         } catch (err) {
             setError('Cd not found.');
             alert('Cd not found.');
@@ -234,16 +238,21 @@ const CDDetails = ({ params }) => {
     return (
         <div >
             <NavBar></NavBar>
-            {/*{!isLoggedIn && (
-                <p>NOT LOGGED IN</p>
-            )}*/}
-            {cd == undefined && (
+            {!isLoggedIn && (
+                <RestrictedAccess/>
+            )}
+            {isLoggedIn && loading && (
+                <div>
+                    <p>Loading....</p>
+                </div>
+            )}
+            {isLoggedIn && !loading && cd == undefined && (
                 <p>Cd not found</p>
             )}
-            {cd != undefined && (
+            {isLoggedIn && !loading && cd != undefined && (
                 <div className="flex flex-col w-full">
-                    <div className="grid grid-cols-2 w-full">
-                        <div className="flex flex-col p-2 col-first gap-y-1">
+                    <div className="grid grid-cols-2 ml-8 mr-8 mt-1 mb-1  bg-white rounded-lg">
+                        <div className="flex flex-col p-4 col-first gap-y-1">
                             <h1 className="text-3xl text-black"> {cd.name || 'CD not found'} </h1>
                             <Image src={cd.imgUrl} alt={`${cd.name} cover`} width={300} height={300} />
                             <h2 className="text-xl"> Artist: </h2>
@@ -251,7 +260,7 @@ const CDDetails = ({ params }) => {
                             <h2 className="text-xl">Date Added: </h2>
                             <p className="text-black">{cd.date} </p>
                         </div>
-                        <div className="col-last">
+                        <div className="col-last p-4">
                             <h2 className="text-xl"> Track List: </h2>
                             <ol className="list-decimal ml-6">
                                 {cd.tracklist.map((track, index) => (
@@ -260,15 +269,15 @@ const CDDetails = ({ params }) => {
                             </ol>
                         </div>
                     </div>
-                    <div className="mx-auto flex flex-box gap-x-10">
+                    <div className="mx-auto flex flex-box mt-3 mb-2 gap-x-10">
                         <Link href={`/edit-cd/${cd.id}`} passHref>
-                            <button className=" text-black bg-purple-500 px-4 py-3 hover:bg-white-900">
+                            <button className=" text-black rounded bg-purple-500 px-4 py-3 hover:bg-white-900">
                                 Edit
                             </button>
                         </Link>
                         <button
                             onClick={handleDelete}
-                            className=" text-black bg-red-500 px-4 py-3 hover:bg-white-900">
+                            className=" text-black rounded bg-red-500 px-4 py-3 hover:bg-white-900">
                             Delete
                         </button>
                     </div>

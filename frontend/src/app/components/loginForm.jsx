@@ -32,20 +32,15 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); // Reset error state
-
-    // Simple validation
-    if (!username || !password) {
-      setError('Please enter both username and password.');
-      alert(error);
-      return;
-    }
-
     try {
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        throw Error;
+      }
       // Attempt login
       await login(username, password);
       router.push('/');
     } catch (err) {
-      setError('Invalid username or password.'); // Display error if login fails
       setUsername("");
       setPassword("");
     }
