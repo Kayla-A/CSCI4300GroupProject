@@ -6,6 +6,7 @@ import AlbumCards from '../components/albumCard';
 import Link from "next/link";
 import { AuthContext } from "../context/user";
 import {useContext} from "react";
+//import { transform } from "next/dist/build/swc/generated-native";
 
 // The APi credentials for spotify
 const CLIENT_ID = "10e4f3b0a20a4ac8b9faa1370d67404f";
