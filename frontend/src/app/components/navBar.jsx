@@ -27,11 +27,18 @@ export default function NavBar() {
                     </div>
                     <div className="text-black text-2xl">Shelf Space</div>
                 </div>
-                <div className="flex-grow mx-4">
-                    {/* <SearchBar></SearchBar> */}
-                    <Link href="./spotifyResults">
-                        <button type = "button"> Search by albums using Spotify</button>
-                    </Link>
+            
+                <div className="flex justify-center items-center h-full">
+                    {/* <Link href="./spotifyResults">
+                     <button 
+                     type="button" 
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+            Search by albums using Spotify
+        </button>
+    </Link> */}
+</div>
+    {/* <p className="mt-4 text-black">Click here to return to shelf</p> */}
                 {/*
                     <input
                         type="text"
@@ -39,7 +46,7 @@ export default function NavBar() {
                         placeholder="Search..."
                     />
                 */}
-                </div>
+                {/* </div> */}
                 {!isLoggedIn &&(
                     <Link href="../login">
                     <button className="rounded bg-pink-500 text-white px-4 py-3 hover:bg-white hover:text-black">
@@ -50,10 +57,18 @@ export default function NavBar() {
                 {isLoggedIn && (
                     <>
                     <Link href="../spotifyResults">
-                        <button className="px-4 py-3 hover:bg-white-900">
+                        {/* <button className="px-4 py-3 hover:bg-white-900">
                             Search 
-                          </button>
-                        </Link>
+                          </button> */}
+                        <button 
+                        type="button" 
+                        className="px-4 py-2 text-black rounded hover:blue focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
+                            Search by albums using Spotify
+                        </button>
+                    </Link>
+
+                   
                         <Link href="../create-cd">
                             <button className="px-4 py-3 hover:bg-white-900">
                                 Add CD
@@ -68,3 +83,4 @@ export default function NavBar() {
         </nav>
     ); //return
 };//navBar
+

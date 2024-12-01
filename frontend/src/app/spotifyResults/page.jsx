@@ -61,7 +61,7 @@ const SpotifyResults = () => {
         } // searchDetails
 
         // return the ID of the specified artist
-        var artistID = await fetch ('https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist', searchDetails)
+        var artistID = await fetch ('https://api.spotify.com/v1/search?q=' + encodeURIComponent(searchInput) + '&type=artist', searchDetails)
         .then(response => response.json())
         .then(data => {return data.artists.items[0].id})
 
@@ -104,7 +104,7 @@ return (
 
         <div className="grid grid-cols-3 gap-4 mt-4">
           {albums.map((album, i) => (
-            <AlbumCards key={i} album={album} />
+            <AlbumCards key={i} album={album} accessToken = {accessToken} />
           ))}
        </div> 
      </div>  

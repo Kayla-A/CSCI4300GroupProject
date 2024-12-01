@@ -1,7 +1,7 @@
 "use client"
-import {AuthContext} from "../context/user";
+import { AuthContext } from "../context/user";
 import Link from "next/link";
-import {useContext, useEffect, useState} from "react"
+import { useContext, useEffect, useState } from "react"
 import NavBar from "../components/navBar";
 import { useRouter } from 'next/navigation';
 import RestrictedAccess from "@/app/components/restrictedAccess";
@@ -15,27 +15,27 @@ const CreateCd = () => {
         throw new Error("AuthContext is not available");
     }
 
-    const { isLoggedIn} = context;
+    const { isLoggedIn } = context;
 
     const router = useRouter();
 
-    const [name,setName] = useState('');
+    const [name, setName] = useState('');
     const [artist, setArtist] = useState('');
     const [date, setDate] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [tracklist, setTracklist] = useState<string[]>([])
     const [cdId, setCdId] = useState("");
     const userID = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
-    const [error,setError] = useState("");
-    const[isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // @ts-ignore
     const handleDate = (e) => {
         let value = e.target.value.replace(/\D/g, ''); // Remove any non-digit characters
-        if (value.length >= 2 ) {
+        if (value.length >= 2) {
             value = value.slice(0, 2) + '/' + value.slice(2); // Insert the slash after MM
         }
-        if (value.length >= 4 ) {
+        if (value.length >= 4) {
             value = value.slice(0, 5) + '/' + value.slice(5); // Insert the slash after DD
         }
         if (value.length > 10) {
@@ -44,8 +44,22 @@ const CreateCd = () => {
         setDate(value);
     };
     useEffect(() => {
-        const now = new Date(); // Get the current date and time
-        setDate(now.toLocaleDateString('en-US')); // Format and set the date
+
+        if (typeof window !== 'undefined') {
+            const savedAlbum = localStorage.getItem('selectedAlbum');
+            if (savedAlbum) {
+                const albumData = JSON.parse(savedAlbum);
+                setName(albumData.name || '');
+                setArtist(albumData.artist || '');
+                setImageUrl(albumData.imgUrl || '');
+                setTracklist(albumData.tracklist || []);
+                // Clear the album data from localStorage
+                localStorage.removeItem('selectedAlbum');
+            }
+            // Set the current date
+            const now = new Date();
+            setDate(now.toLocaleDateString('en-US'));
+        }
     }, []);
 
     const createCD = async () => {
@@ -63,9 +77,9 @@ const CreateCd = () => {
         };
         console.log(cdData);
         try {
-            const response = await fetch("http://localhost:3000/api/cds",{
+            const response = await fetch("http://localhost:3000/api/cds", {
                 method: "POST",
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -91,9 +105,9 @@ const CreateCd = () => {
     };
     const addCdToUser = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/users/${userID}`,{
+            const response = await fetch(`http://localhost:3000/api/users/${userID}`, {
                 method: "PUT",
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -146,7 +160,7 @@ const CreateCd = () => {
         <div>
             <NavBar></NavBar>
             {!isLoggedIn && (
-                <RestrictedAccess/>
+                <RestrictedAccess />
             )}
             {isLoggedIn && (
                 <div className="flex flex-col justify-center">
@@ -217,5 +231,6 @@ const CreateCd = () => {
 };
 
 export default CreateCd;
+
 
 
