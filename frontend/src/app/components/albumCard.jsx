@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 
 export default function AlbumCards({ album }) {
 
@@ -9,9 +10,7 @@ export default function AlbumCards({ album }) {
           src={album.images[0]?.url} 
           alt={album.name}
           className="w-full h-48 object-cover"
-          onClick = {() => 
-            console.log("CLICKED")
-          } // onClick (when click add album info to shelf??)
+          onClick = {() => console.log("CLICKED")} // onClick (when click add album info to shelf??)
         />
       </button>
       <div className="p-4">
