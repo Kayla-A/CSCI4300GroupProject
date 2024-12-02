@@ -120,7 +120,9 @@ const RegistrationForm = () => {
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"/>
+                            className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                            required
+                        />
                         <label className="text-lg text-black font-medium mb-1">Password*</label>
                         <div className="relative flex items-center mb-4">
                             <input
@@ -129,6 +131,7 @@ const RegistrationForm = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
                                 aria-label="Password"
+                                required
                             />
                             <div
                                 onClick={togglePasswordVisibility}

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { AuthContext } from "../context/user";
 import {useContext} from "react";
 //import { transform } from "next/dist/build/swc/generated-native";
+import NavBar from "../components/navBar";
 
 // The APi credentials for spotify
 const CLIENT_ID = "10e4f3b0a20a4ac8b9faa1370d67404f";
@@ -83,6 +84,7 @@ const SpotifyResults = () => {
 return (
     
      <div>
+         <NavBar></NavBar>
         <input
             placeholder = "Search albums by artist"
             className = "w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -98,9 +100,6 @@ return (
             
         /> 
 
-        <Link href = "/">
-        <button type = "button"> Click here to return to shelf</button>
-        </Link>
 
         <div className="grid grid-cols-3 gap-4 mt-4">
           {albums.map((album, i) => (

@@ -168,51 +168,56 @@ const CreateCd = () => {
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 p-3 mx-auto gap-6">
                             <div className="col-first">
                                 <div>
-                                    <label className="text-lg text-black font-medium mb-1">CD Name</label>
+                                    <label className="text-lg text-black font-medium mb-1">CD Name*</label>
                                     <input
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-lg text-black font-medium mb-1">Artist</label>
+                                    <label className="text-lg text-black font-medium mb-1">Artist*</label>
                                     <input
                                         type="text"
                                         value={artist}
                                         onChange={(e) => setArtist(e.target.value)}
                                         className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-lg text-black font-medium mb-1">Date Added</label>
+                                    <label className="text-lg text-black font-medium mb-1">Date Added*</label>
                                     <input
                                         type="text"
                                         value={date}
                                         onChange={handleDate}
                                         className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-lg text-black font-medium mb-1">CD Cover Art(1:1 aspect ratio
+                                    <label className="text-lg text-black font-medium mb-1">CD Cover Art* (1:1 aspect ratio
                                         preferred)</label>
                                     <input
                                         type="text"
                                         value={imageUrl}
                                         onChange={(e) => setImageUrl(e.target.value)}
                                         className="w-full p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
+                                        required
                                     />
                                 </div>
                             </div>
                             <div className="col-last">
-                                <label className="text-lg text-black font-medium mb-1">Tracklist</label>
+                                <label className="text-lg text-black font-medium mb-1">Tracklist*</label>
                                 <textarea
                                     value={tracklist.join("\n")}
                                     onChange={(e) => setTracklist(e.target.value.split("\n"))}
                                     className="w-full h-full mr-4 p-3 border border-gray-400 rounded-lg text-black box-border focus:outline-none"
                                     rows={4}
                                     placeholder="Enter each track on a new line"
+                                    required
                                 />
                             </div>
                             <button

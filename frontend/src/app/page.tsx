@@ -146,6 +146,14 @@ const Home = () => {
                             </button>
                         </Link>
                     </div>
+                    <Link href="../spotifyResults">
+                        <button
+                            type="button"
+                            className=" rounded text-black bg-green-100 px-4 py-3 mb-2 hover:bg-white-900"
+                        >
+                            Search by albums using Spotify
+                        </button>
+                    </Link>
                 </div>
             )}
             {loading && isLoggedIn && (

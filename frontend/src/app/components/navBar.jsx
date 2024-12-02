@@ -30,8 +30,8 @@ export default function NavBar() {
             
                 <div className="flex justify-center items-center h-full">
                     {/* <Link href="./spotifyResults">
-                     <button 
-                     type="button" 
+                     <button
+                     type="button"
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
             Search by albums using Spotify
@@ -48,27 +48,24 @@ export default function NavBar() {
                 */}
                 {/* </div> */}
                 {!isLoggedIn &&(
+                    <div>
                     <Link href="../login">
                     <button className="rounded bg-pink-500 text-white px-4 py-3 hover:bg-white hover:text-black">
                     Login
                     </button>
-                    </Link>)
+                    </Link>
+                    </div>)
                 }
                 {isLoggedIn && (
                     <>
-                    <Link href="../spotifyResults">
-                        {/* <button className="px-4 py-3 hover:bg-white-900">
-                            Search 
-                          </button> */}
-                        <button 
-                        type="button" 
-                        className="px-4 py-2 text-black rounded hover:blue focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        >
-                            Search by albums using Spotify
-                        </button>
-                    </Link>
-
-                   
+                        <Link href="../spotifyResults">
+                            <button
+                                type="button"
+                                className=" w-full px-4 py-2 text-black rounded hover:blue focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            >
+                                Search by albums using Spotify
+                            </button>
+                        </Link>
                         <Link href="../create-cd">
                             <button className="px-4 py-3 hover:bg-white-900">
                                 Add CD
