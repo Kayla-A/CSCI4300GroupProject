@@ -10,43 +10,38 @@ import { useRouter } from "next/navigation";
 const CLIENT_ID = "10e4f3b0a20a4ac8b9faa1370d67404f";
 const CLIENT_SECRET = "f3724e5a5318407c83fef45cf7d6eaa8";
 
-// To proffessor: Kayla also worked on this too with live share. It may not show my name/edits on GitHub
+// To proffessor: Kayla also worked on this too with live share. It may not show my name/edits on GitHub.
+// Main 
 export default function SearchBar() {
 
     // State variables are in charge of holding the search results from the user input, 
-    // store the token retreived from the api, and storing the ablums retreived from the qapi
+    // store the token retreived from the api, and storing the ablums retreived from the api
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");   
     const [albums, setAlbums] = useState([]);
     const {isLoggedIn, logout} = useContext(AuthContext);
     const router = useRouter();
 
+
     const handleLogout = () => {
         logout();
         router.push("/");
     };
 
+    // Grab and store the access token
     useEffect(() => {
-        //API Access Token
+        // API Access Token
         var authParametes = {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
         }
-
-        // fecth may need error handling 
         fetch('https://accounts.spotify.com/api/token', authParametes)
             .then(result => result.json())
             .then(data => setAccessToken(data.access_token))
     }, []) // useEffect
 
-    // const handleSearch = () => {
-    //     if (!searchInput) {
-    //       alert('Please enter a search term!');
-    //       return;
-    //     }
-
-    // Get Spotify Access Token at app start up
+    // Perform search for albums based on the artist
     async function search() {
         console.log("Search for " + searchInput)
 
@@ -64,7 +59,6 @@ export default function SearchBar() {
         .then(response => response.json())
         .then(data => {return data.artists.items[0].id})
 
-        // console.log("artist Id is " = artistID);
 
         // Use the artists ID to grab all of the albums composed by the specified artist
         var albumResults = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchDetails)
@@ -76,8 +70,6 @@ export default function SearchBar() {
 
         console.log(albums)
     } // search
-
-    // console.log(albums);
 
 return (
     
@@ -97,7 +89,7 @@ return (
             
         /> 
 
-
+            
         {/* // <div className="grid grid-cols-3 gap-4 mt-4">
         {albums.map((album, i) => (
           <AlbumCards key={i} album={album} />

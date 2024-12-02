@@ -21,12 +21,8 @@ const SpotifyResults = () => {
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");   
     const [albums, setAlbums] = useState([]);
-   // const {isLoggedIn, logout} = useContext(AuthContext);
-
-   // const handleLogout = () => {
-  //      logout();
-  //      router.push("/");
-  //  };
+  
+    // const {isLoggedIn, logout} = useContext(AuthContext);
 
     useEffect(() => {
         //API Access Token
@@ -41,12 +37,6 @@ const SpotifyResults = () => {
             .then(result => result.json())
             .then(data => setAccessToken(data.access_token))
     }, []) // useEffect
-
-    // const handleSearch = () => {
-    //     if (!searchInput) {
-    //       alert('Please enter a search term!');
-    //       return;
-    //     }
 
     // Get Spotify Access Token at app start up
     async function search() {
@@ -66,8 +56,6 @@ const SpotifyResults = () => {
         .then(response => response.json())
         .then(data => {return data.artists.items[0].id})
 
-        // console.log("artist Id is " = artistID);
-
         // Use the artists ID to grab all of the albums composed by the specified artist
         var albumResults = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchDetails)
         .then(response => response.json())
@@ -78,8 +66,6 @@ const SpotifyResults = () => {
 
         console.log(albums)
     } // search
-
-    // console.log(albums);
 
 return (
     
@@ -93,13 +79,12 @@ return (
             onKeyPress = {event => {
                 if (event.key == "Enter") {
                     search();
-                } // if
+                }
             }} // onKeyPress
 
             onChange = {event => setSearchInput(event.target.value)}
             
         /> 
-
 
         <div className="grid grid-cols-3 gap-4 mt-4">
           {albums.map((album, i) => (

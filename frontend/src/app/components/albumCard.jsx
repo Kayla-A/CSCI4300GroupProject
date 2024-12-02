@@ -4,7 +4,8 @@ import {useRouter} from "next/navigation";
  
 export default function AlbumCards({ album, accessToken }) {
 const router = useRouter();
-// testing -------------------------------
+
+  // Dictate the info and the structure of the results from the api
   const albumData = {
     name: album.name,
     artist: album.artists[0]?.name || '',
@@ -12,20 +13,24 @@ const router = useRouter();
     albumId: album.id,
   };
 
-
+// Handle the logic for when a card is slicked 
 const handleClick = async () => {
   try {
+    // Grab the tracklists for the various albums
     const tracklist = await fetchTrackList(albumData.albumId, accessToken);
     const dataToSave = {...albumData, tracklist};
+
   if (typeof window !== 'undefined') {
     localStorage.setItem('selectedAlbum', JSON.stringify(dataToSave));
   } // if
+  // Route to tge create-cd page after an album card is clicked
   router.push('/create-cd')
   } catch (error) {
     console.error('Error fetching tracklist or saving data:', error);
   }
 }; // handle click
 
+// Fetch anbd process the results fromn the spotify api
 const fetchTrackList = async (albumId, token) => {
   const response = await fetch(
     `https://api.spotify.com/v1/albums/${albumId}/tracks`,
@@ -40,45 +45,16 @@ const fetchTrackList = async (albumId, token) => {
   return tracks;
 } // fetchTrackList
 
-
-// testing -------------------------------
-
+  // Place the each of albums into a card
   return (
-   //<Link href = "/create-cd">
       <div className ="album-card cursor-pointer" onClick={handleClick}>
         <img src={albumData.imgUrl} alt={albumData.name} />
         <h3>{albumData.name}</h3>
         <p>{albumData.artist}</p>
       </div>
-   // </Link>
      );
     }
 
-
-
-
-
-
-
-    /** 
-    <div className="border rounded-lg shadow-md overflow-hidden">
-      <button>
-        <img
-          src={album.images[0]?.url} 
-          alt={album.name}
-          className="w-full h-48 object-cover"
-           onClick = {() => 
-              console.log("CLICKED")
-          } // onClick (when click add album info to shelf??)
-        />
-      </button>
-      <div className="p-4">
-        <h3 className="text-lg font-bold">{album.name}</h3>
-      </div> 
-    </div>
-    */
-//   );
-// }
 
 
 
